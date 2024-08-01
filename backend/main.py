@@ -1,19 +1,33 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 from models import Base
 from schemas import UserCreate, User, DoctorCreate, Doctor, PatientCreate, Patient, AppointmentCreate, Appointment, UserLogin, Token
-import backend.crud as crud
-from backend.crud import create_user, create_patient, create_appointment, create_doctor, get_user_by_username, delete_doctor, delete_patient, delete_appointment, get_appointments_by_patient, verify_user
+import crud
+from crud import create_user, create_patient, create_appointment, create_doctor, get_user_by_username, delete_doctor, delete_patient, delete_appointment, get_appointments_by_patient, verify_user
 from database import engine
 from dependencies import get_db
-import backend.auth as auth
+import auth
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",  # React app URL
+    "http://127.0.0.1:3000"   # React app URL
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/users/", response_model=User)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
@@ -35,7 +49,9 @@ def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth2Passw
     access_token = auth.create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", 
+    "username": user.username,
+    "role": user.role}
 
 @app.post("/doctors/", response_model=Doctor)
 def create_doctor(doctor: DoctorCreate, db: Session = Depends(get_db), current_user: User = Depends(auth.get_current_user)):
@@ -82,3 +98,15 @@ def delete_appointment(appointment_id: int, db: Session = Depends(get_db), curre
 @app.get("/patients/{patient_id}/appointments/", response_model=List[Appointment])
 def get_appointments_by_patient(patient_id: int, db: Session = Depends(get_db), current_user: User = Depends(auth.get_current_user)):
     return crud.get_appointments_by_patient(db, patient_id)
+
+@app.get("/doctors/", response_model=List[Doctor])
+def get_doctors(db: Session = Depends(get_db), current_user: User = Depends(auth.get_current_user)):
+    return crud.get_doctors(db=db)
+
+@app.get("/patients/", response_model=List[Patient])
+def get_patients(db: Session = Depends(get_db), current_user: User = Depends(auth.get_current_user)):
+    return crud.get_patients(db=db)
+
+@app.get("/appointments/", response_model=List[Appointment])
+def get_appointments(db: Session = Depends(get_db), current_user: User = Depends(auth.get_current_user)):
+    return crud.get_appointments(db=db)
