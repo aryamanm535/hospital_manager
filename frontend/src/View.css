@@ -1,0 +1,43 @@
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .data-table th {
+    background-color: #f2f2f2;
+    color: black;
+  }
+  
+  .data-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .data-table tr:hover {
+    background-color: #c2bebe;
+  }
+  
+  .data-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+  }

@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+  }
+  
+  .menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #b6b4b4;
+    padding: 20px;
+  }
+  
+  header {
+    width: 105%;
+    background-color: #848383;
+    color: rgba(255, 255, 255, 0.795);
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .user-info {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 14px;
+    color: white;
+  }
+  
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  .menu-category {
+    margin-bottom: 20px;
+  }
+  
+  .menu-category h2 {
+    margin-bottom: 10px;
+    color: #3f51b5;
+  }
+  
+  .menu-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .menu-card:active{
+    background-color: rgb(254, 19, 19);
+  }
+
+  .menu-card:hover {
+    transform: translateY(-5px);
+    background-color: #e7e7e7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .menu-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .menu-card-content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .menu-card-content h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
