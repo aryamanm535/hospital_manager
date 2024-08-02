@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+//creating appointment constant variables along with use states
 const AddAppointment = ({ token }) => {
   const [doctorId, setDoctorId] = useState('');
   const [patientId, setPatientId] = useState('');
